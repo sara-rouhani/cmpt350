@@ -1,0 +1,16 @@
+{
+  "name": "server-ajax",
+  "version": "1.0.0",
+  "description": "A simple demo for handling Ajax GET request by a nodejs server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sara.rouhani@usask.ca",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  }
+}

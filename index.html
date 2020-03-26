@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>CMPT350 Note App</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript">
+	$(document).ready(function () {
+		
+	 $('#ajaxRetrieve').click(function(){
+		var x = $("#nameRetrieve").val();
+		retrieve_dict = {"name":x};
+		$.getJSON('http://localhost:8001', retrieve_dict, function (data) {
+			console.log(data.name);
+			
+			var cardheader = document.getElementById("cardHeader");
+			cardheader.innerHTML = data.name;
+			
+			var cardbody = document.getElementById("cardBody");
+			cardbody.innerHTML = data.text;
+		});
+	 });
+
+	$('#ajaxSave').click(function(){
+		var x = $("#nameSave").val();
+		var y = $("#comment").val();
+		var note_dict = {"name":x, "text":y};
+		if (x!="") {
+			$.post('http://localhost:8001/new', note_dict ,function (data) {
+			alert(data.name.toString()+" is added!");
+			});
+		} else {alert("Please fill the name field!")}
+	 });
+	 
+	});
+</script>
+
+</head>
+<body>
+
+<div class="jumbotron text-center">
+  <h1>A Simple Note Application</h1>
+  <p>Don't forget anything anymore!</p> 
+</div>
+  
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+      <h3>Save A Note</h3>
+	  <form class="form-group">
+		<div class="form-group">
+		  <label for="name">Name:</label>
+		  <input type="text" class="form-control" id="nameSave" required></input>
+		</div>
+		<div class="form-group">
+		  <label for="msg">Note:</label>
+		  <textarea class="form-control" rows="5" id="comment" maxlength=100></textarea>
+		</div>
+		<button type="submit" class="btn btn-default" id="ajaxSave">Submit</button>
+	  </form>
+    </div>
+    <div class="col-sm-6">
+      <h3>Retrieve A Note</h3>
+      <form>
+		<div class="form-group">
+		  <label for="name">Name:</label>
+		  <input type="text" class="form-control" id="nameRetrieve">
+		</div>
+		<button type="button" class="btn btn-default" id="ajaxRetrieve">Submit</button>
+		<br></br>
+		<div class="card">
+			<h3 class="card-title" id="cardHeader"></h3>
+			<div class="card-body" id="cardBody"></div>
+	  </div>
+	  </form>
+	</div>
+
+  </div>
+</div>
+
+</body>
+</html>
+
